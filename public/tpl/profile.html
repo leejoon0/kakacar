@@ -1,0 +1,55 @@
+<div class="row-fluid">
+	<div class="span2"></div>
+	<div class="span8">	
+		
+		<form class="form-horizontal">
+        		<div class="control-group">
+        			<label class="control-label">Box Code</label>
+        			<div class="controls">
+        				<input type="text" name="boxcode" class="form-control" placeholder="boxcode"  value="<%= (attr.boxcode)? attr.boxcode : '' %>">
+        			</div>
+        		</div>
+        		<div class="control-group">
+        			<label class="control-label">Name</label>
+        			<div class="controls">
+        				<input type="text" name="username" class="form-control" placeholder="username" value="<%= (attr.username) ? attr.username : '' %>">
+        			</div>
+        		</div>
+        		<div class="control-group">
+        			<label class="control-label">Email</label>
+        			<div class="controls">
+        				<input type="text" name="email" class="form-control" placeholder="email"  value="<%= (attr.useremail)? attr.useremail : '' %>" disabled>
+        				<span class="help-block">fitter login account info~.</span>
+        			</div>
+        		</div>
+            		<div class="control-group">
+            			<label class="control-label">Pic</label>
+            			<div class="controls">
+            				<input type="text" name="userpic" id="userpic" class="form-control" placeholder="Fitter Pic Path" value="<%= (attr.pic)? attr.pic : '' %>">
+            				<img src="<%= attr.pic %>" id="userpicture" class="img-rounded" style="width:25%;height:25%" >
+            				<span class="help-block">fitter image url</span>
+            			</div>
+            			<span class="btn btn-success fileinput-button">
+                            <span class="glyphicon glyphicon-plus"></span>
+                            <span>Add files...</span>
+                    	    <input id="fileupload" type="file" name="files[]" data-url="/upload" multiple>
+                    	</span>
+                    	<div id="progress" style="width:150px">
+                            <div class="bar" style="width: 0%;"></div>
+                            <span class="progressmsg"></span>
+                        </div>
+            		</div>
+        		<!--<div class="control-group">
+        			<label class="control-label">Nickname</label>
+        			<div class="controls">
+        				<textarea rows="3" name="nickname" placeholder="nickname"><%= (attr.nickname) ? attr.nickname : '' %></textarea>
+        				<span class="help-block">Keep it short and meaningful.</span>
+        			</div>
+        		</div>-->
+        	</form>
+		
+	</div>
+	<div class="span2"><a class="btn btn-primary edit-save" >Save</a></div>
+
+</div>
+</div>

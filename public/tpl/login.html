@@ -1,0 +1,91 @@
+<script type="text/javascript">
+    window.fbAsyncInit = function() {   
+        FB.init({appId: '592568917499825', status: true, cookie: true,xfbml: true});       
+    };   
+           
+    (function(d){   
+       var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];   
+       if (d.getElementById(id)) {return;}   
+       js = d.createElement('script'); js.id = id; js.async = true;   
+       js.src = "//connect.facebook.net/en_US/all.js";   
+       ref.parentNode.insertBefore(js, ref);   
+     }(document));      
+                   
+    function facebooklogin() {   
+        //페이스북 로그인 버튼을 눌렀을 때의 루틴.   
+            FB.login(function(response) {   
+                var fbname;   
+                var accessToken = response.authResponse.accessToken;
+                FB.api('/me', function(user) {   
+                fbname = user.name;
+                console.log(user);
+                //response.authResponse.userID   
+                $.post("/facebookauth", { "userid": user.id, "username": fbname, "fbaccesstoken":accessToken},   
+                function (res) {   
+                    console.log(res);
+                    $.ajax({
+        				url: "/fitter/login",
+        				type: "post",
+        				data: {
+        					email: res.userid,
+        					password: "1"
+        				},
+        				success: function (data,status,xhr) {
+        					
+        					if (data.msg=="Authorized") {
+                                app.headerView.model.trigger('login');
+        						app.navigate('#posts', {trigger: true});
+        					}
+        					else {
+        					    app.alertsView.error (data.msg);
+        					}
+        
+        				},
+        				error: function (xhr, status, error) {
+        					console.log(error);
+        					console.log(xhr);
+        					app.alertsView.collection.add ({text: JSON.parse(xhr.responseText).error, status: status, error:error});
+        					
+        				}
+        			})
+			
+                });       
+            });  
+            }, {scope: 'publish_stream,user_likes'});   
+    }
+
+    </script>
+
+<h1>Log In</h1>
+<div class="well row">
+	
+	<form role="form">
+	    <div class="form-group">
+			<label for="email">Email</label>
+			<input type="email" placeholder="Email" class="form-control" name="email" id="email" value="test@gmail.com"/>
+		</div>
+		<div class="form-group">
+			<label for="password">Password</label>
+			<input type="password" placeholder="Password" class="form-control" name="password" id="password" value="1"/>
+		</div>
+		<div class="form-group">
+			<a class="btn btn-success btn-large" id="login">Log In with Email</a>
+			<a class="btn btn-success btn-large" href="#signup">Sign Up</a>
+			<button class="btn btn-facebook" onclick="facebooklogin()" ><i class="fa fa-facebook"></i>  Connect with Facebook</button >
+		</div>
+	</form>
+	<hr/>
+	<div>
+	    <h3><b># 적용된 오픈소스들 #</b></h3>
+	    <h5>개발IDE : <a href="https://c9.io/" target="_blank"><i>Cloud9</i></a></h5>
+	    <h5>Client : <a href="http://backbonejs.org/" target="_blank"><i>Backbone.js</i></a> + 
+	                <a href="http://jquery.com/" target="_blank"><i>jQuery</i></a> + 
+	                <a href="http://getbootstrap.com/css/" target="_blank"><i>Bootstrap</i></a> + 
+	                <a href="http://requirejs.org/" target="_blank"><i>requirejs</i></a></h5>
+	    <h5>Server : <a href="http://www.nodejs.org/" target="_blank"><i>Node.js</i></a> + 
+	                <a href="http://expressjs.com/" target="_blank"><i>Express.js</i></a>( web application framework for node.js)</h5>
+	    <h5>DB : MongoDB (<a href="https://mongolab.com" target="_blank"><i>MongoDB hosting</i></a> : database as a service by MongoLab)</h5>
+	    <h5>MongoDB nodejs driver : <a href="https://github.com/marcello3d/node-mongolian" target="_blank"><i>Mongolian</i></a></h5>
+	    <h5>Hosting : <a href="https://www.heroku.com/" target="_blank"><i>Heroku</i></a></h5>
+	</div>
+</div>
